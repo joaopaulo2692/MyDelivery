@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyDelivery.Domain.Entities;
 using MyDelivery.Infrastructure.Data;
+using MyDelivery.Domain.Interfaces.Repository;
+using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MyDelivery.Domain.Interfaces.Repository
@@ -20,22 +19,54 @@ namespace MyDelivery.Domain.Interfaces.Repository
 
         public async Task AdicionarAsync(Pedido pedido)
         {
-            await _context.Pedidos.AddAsync(pedido);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.Pedidos.AddAsync(pedido);
+                await _context.SaveChangesAsync();
+                Log.Information("Pedido adicionado com sucesso. Id={IdPedido}", pedido.IdPedido);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Erro ao adicionar pedido. Numero={NumeroPedido}", pedido.NumeroPedido);
+                throw;
+            }
         }
 
         public async Task AtualizarAsync(Pedido pedido)
         {
-            _context.Pedidos.Update(pedido);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Pedidos.Update(pedido);
+                await _context.SaveChangesAsync();
+                Log.Information("Pedido atualizado com sucesso. Id={IdPedido}", pedido.IdPedido);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Erro ao atualizar pedido. Id={IdPedido}", pedido.IdPedido);
+                throw;
+            }
         }
 
         public async Task<Pedido?> ObterPorIdAsync(int idPedido)
         {
-            return await _context.Pedidos
-                .Include(p => p.Ocorrencias) // carrega as ocorrências relacionadas
-                .FirstOrDefaultAsync(p => p.IdPedido == idPedido);
+            try
+            {
+                var pedido = await _context.Pedidos
+                    .Include(p => p.Ocorrencias)
+                    .FirstOrDefaultAsync(p => p.IdPedido == idPedido);
+
+                if (pedido != null)
+                    Log.Information("Pedido obtido com sucesso. Id={IdPedido}", idPedido);
+                else
+                    Log.Warning("Pedido não encontrado. Id={IdPedido}", idPedido);
+
+                return pedido;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Erro ao obter pedido. Id={IdPedido}", idPedido);
+                throw;
+            }
         }
     }
-
 }
