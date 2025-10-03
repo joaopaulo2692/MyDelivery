@@ -57,8 +57,8 @@ public class OcorrenciaService : IOcorrenciaService
 
             pedido.AdicionarOcorrencia(ocorrencia);
 
-            //await _pedidoRepo.AtualizarAsync(pedido);
-            await _ocRepo.AdicionarAsync(ocorrencia);
+            await _pedidoRepo.AtualizarAsync(pedido);
+            //await _ocRepo.AdicionarAsync(ocorrencia);
 
             _logger.LogInformation("Ocorrência registrada. PedidoId={PedidoId} Tipo={Tipo}", pedidoId, tipo);
             return ocorrencia;
@@ -107,7 +107,7 @@ public class OcorrenciaService : IOcorrenciaService
             pedido.RemoverOcorrencia(idOcorrencia);
 
             await _pedidoRepo.AtualizarAsync(pedido);
-            await _ocRepo.RemoverAsync(oc);
+            //await _ocRepo.RemoverAsync(oc);
 
             _logger.LogInformation("Ocorrência excluída. PedidoId={PedidoId} OcorrenciaId={OcId}", pedidoId, idOcorrencia);
         }

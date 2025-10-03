@@ -72,7 +72,9 @@ namespace MyDelivery.Domain.Entities
                 IndEntregue = false;
         }
 
-        public bool EstaConcluido() => _ocorrencias.Any(o => o.IndFinalizadora);
+        //public bool EstaConcluido() => _ocorrencias.Any(o => o.IndFinalizadora);
+        public bool EstaConcluido() => _ocorrencias.Count > 1;
+
     }
 
 }
