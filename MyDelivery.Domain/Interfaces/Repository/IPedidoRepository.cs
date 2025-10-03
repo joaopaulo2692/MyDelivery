@@ -1,17 +1,16 @@
 ﻿using MyDelivery.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace MyDelivery.Application.Interfaces
+namespace MyDelivery.Domain.Interfaces.Repository
 {
     public interface IPedidoRepository
     {
-        Task<Pedido?> ObterPorIdAsync(int id);
+        Task<Pedido?> ObterPorIdAsync(int idPedido);
+        Task AdicionarAsync(Pedido pedido);
         Task AtualizarAsync(Pedido pedido);
-    }
-
-    public interface IOcorrenciaRepository
-    {
-        Task AdicionarAsync(Ocorrencia ocorrencia);
-        Task RemoverAsync(Ocorrencia ocorrencia);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using FluentValidation.TestHelper;
 using Xunit;
-using MyDelivery.Application.DTOs;
 using MyDelivery.Domain.Enums;
+using MyDelivery.Application.DTOs.Ocorrencia;
 
 namespace MyDelivery.UnitTests.Validators
 {

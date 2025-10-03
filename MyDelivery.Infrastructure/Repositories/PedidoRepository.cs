@@ -1,44 +1,41 @@
-﻿using MyDelivery.Domain.Entities;
-using MyDelivery.Application.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using MyDelivery.Domain.Entities;
 using MyDelivery.Infrastructure.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MyDelivery.Infrastructure.Repositories
+namespace MyDelivery.Domain.Interfaces.Repository
 {
     public class PedidoRepository : IPedidoRepository
     {
         private readonly MyDbContext _context;
 
-        public PedidoRepository(MyDbContext context) => _context = context;
+        public PedidoRepository(MyDbContext context)
+        {
+            _context = context;
+        }
 
-        public async Task<Pedido?> ObterPorIdAsync(int id) =>
-            await _context.Pedidos
-                .Include(p => p.Ocorrencias)
-                .FirstOrDefaultAsync(p => p.IdPedido == id);
+        public async Task AdicionarAsync(Pedido pedido)
+        {
+            await _context.Pedidos.AddAsync(pedido);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task AtualizarAsync(Pedido pedido)
         {
             _context.Pedidos.Update(pedido);
             await _context.SaveChangesAsync();
         }
-    }
 
-    public class OcorrenciaRepository : IOcorrenciaRepository
-    {
-        private readonly MyDbContext _context;
-
-        public OcorrenciaRepository(MyDbContext context) => _context = context;
-
-        public async Task AdicionarAsync(Ocorrencia ocorrencia)
+        public async Task<Pedido?> ObterPorIdAsync(int idPedido)
         {
-            _context.Ocorrencias.Add(ocorrencia);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task RemoverAsync(Ocorrencia ocorrencia)
-        {
-            _context.Ocorrencias.Remove(ocorrencia);
-            await _context.SaveChangesAsync();
+            return await _context.Pedidos
+                .Include(p => p.Ocorrencias) // carrega as ocorrências relacionadas
+                .FirstOrDefaultAsync(p => p.IdPedido == idPedido);
         }
     }
+
 }

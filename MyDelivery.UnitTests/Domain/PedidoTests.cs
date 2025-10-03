@@ -12,7 +12,7 @@ namespace MyDelivery.UnitTests.Domain
         public void AdicionarOcorrencia_Deve_AumentarLista()
         {
             var pedido = new Pedido(1001, DateTime.Now);
-            var oc = Ocorrencia.Criar(ETipoOcorrencia.EmRotaDeEntrega, DateTime.Now);
+            var oc = Ocorrencia.Criar(ETipoOcorrencia.EmRotaDeEntrega, DateTime.Now, 1);
 
             pedido.AdicionarOcorrencia(oc);
 
@@ -24,7 +24,7 @@ namespace MyDelivery.UnitTests.Domain
         public void RemoverOcorrencia_Deve_ReduzirLista()
         {
             var pedido = new Pedido( 1001, DateTime.Now);
-            var oc = Ocorrencia.Criar(ETipoOcorrencia.EmRotaDeEntrega, DateTime.Now);
+            var oc = Ocorrencia.Criar(ETipoOcorrencia.EmRotaDeEntrega, DateTime.Now, 1);
             pedido.AdicionarOcorrencia(oc);
 
             pedido.RemoverOcorrencia(oc.IdOcorrencia);

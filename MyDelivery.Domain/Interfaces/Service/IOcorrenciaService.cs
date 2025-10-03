@@ -1,19 +1,13 @@
 ﻿using MyDelivery.Domain.Entities;
 using MyDelivery.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MyDelivery.Domain.Interfaces.Service
+namespace MyDelivery.Application.Interfaces
 {
-    public interface IPedidoService
+    public interface IOcorrenciaService
     {
-        Task<Pedido> CriarPedidoAsync(int numeroPedido, DateTime horaPedido);
         Task<Ocorrencia> RegistrarOcorrencia(int pedidoId, ETipoOcorrencia tipo, DateTime hora);
         Task ExcluirOcorrencia(int pedidoId, int idOcorrencia);
         Task<Ocorrencia> ObterOcorrenciaPorIdAsync(int pedidoId, int idOcorrencia);
-        Task<Pedido?> ObterPedidoPorIdAsync(int pedidoId);
     }
 }

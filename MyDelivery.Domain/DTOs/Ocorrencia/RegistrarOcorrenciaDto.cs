@@ -2,7 +2,7 @@
 using FluentValidation;
 using MyDelivery.Domain.Enums;
 
-namespace MyDelivery.Application.DTOs
+namespace MyDelivery.Application.DTOs.Ocorrencia
 {
     public class RegistrarOcorrenciaDto
     {

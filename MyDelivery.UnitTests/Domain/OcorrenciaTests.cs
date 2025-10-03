@@ -12,7 +12,7 @@ namespace MyDelivery.UnitTests.Domain
         public void Criar_Deve_RetornarOcorrenciaValida()
         {
             var hora = DateTime.Now;
-            var oc = Ocorrencia.Criar(ETipoOcorrencia.EmRotaDeEntrega, hora);
+            var oc = Ocorrencia.Criar(ETipoOcorrencia.EmRotaDeEntrega, hora, 1);
 
             oc.Should().NotBeNull();
             oc.TipoOcorrencia.Should().Be(ETipoOcorrencia.EmRotaDeEntrega);

@@ -1,6 +1,7 @@
 ﻿using MyDelivery.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace MyDelivery.Domain.Entities
 {
     public class Pedido
     {
+        [Key]
         public int IdPedido { get; private set; }
         public int NumeroPedido { get; private set; }
         public DateTime HoraPedido { get; private set; }

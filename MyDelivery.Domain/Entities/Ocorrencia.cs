@@ -1,33 +1,36 @@
-﻿using MyDelivery.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyDelivery.Domain.Entities;
+using MyDelivery.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
-namespace MyDelivery.Domain.Entities
+public class Ocorrencia
 {
-    public class Ocorrencia
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int IdOcorrencia { get; private set; }
+
+    public ETipoOcorrencia TipoOcorrencia { get; private set; }
+    public DateTime HoraOcorrencia { get; private set; }
+    public bool IndFinalizadora { get; private set; }
+
+    public int PedidoId { get; private set; }
+    [JsonIgnore]
+    public Pedido Pedido { get; private set; } = null!;
+
+
+    protected Ocorrencia() { }
+
+    private Ocorrencia(ETipoOcorrencia tipo, DateTime hora, int pedidoId, bool indFinalizadora = false)
     {
-        public int IdOcorrencia { get; private set; }
-        public ETipoOcorrencia TipoOcorrencia { get; private set; }
-        public DateTime HoraOcorrencia { get; private set; }
-        public bool IndFinalizadora { get; private set; }
-
-        // ctor para ORM
-        protected Ocorrencia() { }
-
-        private Ocorrencia(ETipoOcorrencia tipo, DateTime hora, bool indFinalizadora = false)
-        {
-            TipoOcorrencia = tipo;
-            HoraOcorrencia = hora;
-            IndFinalizadora = indFinalizadora;
-        }
-
-        public static Ocorrencia Criar(ETipoOcorrencia tipo, DateTime hora) =>
-            new Ocorrencia(tipo, hora);
-
-        public void MarcarComoFinalizadora() => IndFinalizadora = true;
+        TipoOcorrencia = tipo;
+        HoraOcorrencia = hora;
+        PedidoId = pedidoId;
+        IndFinalizadora = indFinalizadora;
     }
 
+    public static Ocorrencia Criar(ETipoOcorrencia tipo, DateTime hora, int pedidoId) =>
+        new Ocorrencia(tipo, hora, pedidoId);
+
+    public void MarcarComoFinalizadora() => IndFinalizadora = true;
 }
